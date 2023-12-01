@@ -22,13 +22,13 @@ module lab7bonus_check_tb;
     if (DUT.MEM.mem[2] !== 16'b1101000100000000) begin err = 1; $display("FAILED: mem[2] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
     if (DUT.MEM.mem[3] !== 16'b1101001000000000) begin err = 1; $display("FAILED: mem[3] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
     if (DUT.MEM.mem[4] !== 16'b1101001100010000) begin err = 1; $display("FAILED: mem[4] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
-    if (DUT.MEM.mem[5] !== 16'b1101010000000001) begin err = 1; $display("FAILED: mem[5] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
+    if (DUT.MEM.mem[5] !== 16'b1101010000000001) begin err = 1; $display("FAILED: mem[5] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end // MOV R3,amount -> 00000001
     if (DUT.MEM.mem[6] !== 16'b1010001110100001) begin err = 1; $display("FAILED: mem[6] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
     if (DUT.MEM.mem[7] !== 16'b0110010110100000) begin err = 1; $display("FAILED: mem[7] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
     if (DUT.MEM.mem[8] !== 16'b1010001001000101) begin err = 1; $display("FAILED: mem[8] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
-    if (DUT.MEM.mem[9] !== 16'b1010000100100100) begin err = 1; $display("FAILED: mem[9] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
-    if (DUT.MEM.mem[10] !== 16'b1010100100000000) begin err = 1; $display("FAILED: mem[10] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
-    if (DUT.MEM.mem[11] !== 16'b0010001111111010) begin err = 1; $display("FAILED: mem[11] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
+    if (DUT.MEM.mem[9] !== 16'b1010000100100100) begin err = 1; $display("FAILED: mem[9] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end // ADD R1,R1,R4 
+    if (DUT.MEM.mem[10] !== 16'b1010100100000000) begin err = 1; $display("FAILED: mem[10] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end  // CMP
+    if (DUT.MEM.mem[11] !== 16'b00100011_11111010) begin err = 1; $display("FAILED: mem[11] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end // BLT
     if (DUT.MEM.mem[12] !== 16'b1101001100010100) begin err = 1; $display("FAILED: mem[12] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
     if (DUT.MEM.mem[13] !== 16'b1000001101000000) begin err = 1; $display("FAILED: mem[13] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
     if (DUT.MEM.mem[14] !== 16'b1110000000000000) begin err = 1; $display("FAILED: mem[14] wrong; please set data.txt using lab7bonusfig2.s"); $stop; end
@@ -46,11 +46,12 @@ module lab7bonus_check_tb;
     #10; // waiting for RST state to cause reset of PC
     if (DUT.CPU.PC !== 9'h0) begin err = 1; $display("FAILED: PC did not reset to 0."); $stop; end
 
-    // If your simlation never gets past the the line below, check if your CMP instruction is working
+    // If your simulation never gets past the the line below, check if your CMP instruction is working
     @(posedge LEDR[8]); // set LEDR[8] to one when executing HALT
 
     // NOTE: your program counter register output should be called PC and be inside a module with instance name CPU
     // NOTE: if HALT is working, PC won't change after reaching 0xE
+    $display("PC is: %h", DUT.CPU.PC);
     if (DUT.CPU.PC !== 9'hF) begin err = 1; $display("FAILED: PC at HALT is incorrect."); $stop; end
     if (DUT.CPU.DP.REGFILE.R4 !== 16'h1) begin err = 1; $display("FAILED: R4 incorrect at exit; did MOV R4,#1 not work?"); $stop; end
     if (DUT.CPU.DP.REGFILE.R0 !== 16'h4) begin err = 1; $display("FAILED: R0 incorrect at exit; did LDR R0,[R0] not work?"); $stop; end

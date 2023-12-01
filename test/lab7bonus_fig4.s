@@ -5,10 +5,10 @@
     STR R3,[R4]       // result = 0;
     MOV R0,#1         // R0 contains first parameter
     MOV R1,#5         // R1 contains second parameter
-    MOV R2,#9         // R2 contains third parameter
+    MOV R2,#9         // R2 contains third parameter // goes here after BX for some reason?? //THAT'S CORRECT THO??
     MOV R3,#20        // R3 contains fourth parameter
     BL  leaf_example  // call leaf_example(1,5,9,20);
-    STR R0,[R4]       // result = leaf_example(1,5,9,20);  
+    STR R0,[R4]       // result = leaf_example(1,5,9,20);  // @0a
     HALT
 leaf_example:
     STR R4,[R6]       // save R4 for use afterwards
@@ -19,7 +19,7 @@ leaf_example:
     ADD R4,R4,R5      // R4 = (g + h) + ~(i + j)
     MOV R5,#1
     ADD R4,R4,R5      // R4 = (g + h) - (i + j)
-    MOV R0,R4         // R0 = return value (g + h) - (i + j) 
+    MOV R0,R4         // R0 = return value (g + h) - (i + j) //@14
     LDR R5,[R6,#-1]   // restore saved contents of R5
     LDR R4,[R6]       // restore saved contents of R4
     BX  R7            // return control to caller

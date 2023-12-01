@@ -6,7 +6,7 @@
     MOV R4,#1        // R4 = 1
 
 LOOP:                // for(i=0; i<N; i++) sum = sum + amount[i]; 
-    ADD R5,R3,R1     // R5 = address of amount[i]
+    ADD R5,R3,R1     // R5 = address of amount[i] // = 1
     LDR R5,[R5]      // R5 = amount[i]
     ADD R2,R2,R5     // sum = sum + amount[i]
     ADD R1,R1,R4     // i++
